@@ -46,6 +46,14 @@ public abstract class CheckpointServiceTest {
     }
 
     @Test
+    void shouldNotCheckin2() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpoint.dayOfMonth = 50;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> checkpointService.checkin(checkpoint));
+        Mockito.verify(checkpointPort, Mockito.times(0)).saveCheckin(Mockito.any(Checkin.class));
+    }
+
+    @Test
     void shouldCheckout() {
         CheckpointDTO checkpoint = new CheckpointDTO();
         checkpointService.checkout(checkpoint);
@@ -60,16 +68,20 @@ public abstract class CheckpointServiceTest {
         Mockito.verify(checkpointPort, Mockito.times(0)).saveCheckout(Mockito.any(Checkout.class));
     }
 
-    public void checkout(CheckpointDTO checkpoint) {
-        Checkin lastCheckin = checkpointPort.findLastCheckin(checkpoint.driver, checkpoint.facility);
-        if (lastCheckin == null) {
-            throw new IllegalArgumentException("don't exist previously check in");
-        }
-        if (checkpoint.dayOfMonth > 30 || checkpoint.dayOfMonth < 1) {
-            throw new IllegalArgumentException("Invalid date");
-        }
-        Checkout checkout = new Checkout(checkpoint.facility, checkpoint.driver, checkpoint.dayOfMonth);
-        checkpointPort.saveCheckout(checkout);
+    @Test
+    void shouldNotCheckout2() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpoint.dayOfMonth = 50;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> checkpointService.checkout(checkpoint));
+        Mockito.verify(checkpointPort, Mockito.times(0)).saveCheckout(Mockito.any(Checkout.class));
     }
 
+    @Test
+    void shouldNotFindLastCheckin() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpoint.dayOfMonth = 0;
+        Mockito.when(checkpointPort.findLastCheckin(Mockito.anyString(), Mockito.anyString())).thenReturn(null);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> checkpointService.checkin(checkpoint));
+        Mockito.verify(checkpointPort, Mockito.times(1)).findLastCheckin(Mockito.anyString(), Mockito.anyString());
+    }
 }
