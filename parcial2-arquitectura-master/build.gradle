@@ -56,7 +56,8 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+	//testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
+	testImplementation 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mockito:mockito-core'
 }
