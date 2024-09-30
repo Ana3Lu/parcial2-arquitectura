@@ -57,6 +57,13 @@ spring:
 
 *Se puede acceder a la aplicación desde el http://localhost:8080.
 
+*Para crear la imagen de docker se requiere del siguiente comando:
+docker build -t parcial-2 .
+
+*Para ejecutar la imagen de docker se requiere del siguiente comando:
+docker run -p 8080:8080 parcial-2
+
+
 
 
 
