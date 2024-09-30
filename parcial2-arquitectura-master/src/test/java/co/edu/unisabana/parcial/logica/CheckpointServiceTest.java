@@ -1,6 +1,7 @@
 package co.edu.unisabana.parcial.logica;
 
 import co.edu.unisabana.parcial.controller.dto.CheckpointDTO;
+import co.edu.unisabana.parcial.controller.dto.ResponseGate;
 import co.edu.unisabana.parcial.service.CheckpointDAO;
 import co.edu.unisabana.parcial.service.CheckpointService;
 import co.edu.unisabana.parcial.service.model.Checkin;
