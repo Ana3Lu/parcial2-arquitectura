@@ -9,6 +9,6 @@ COPY src ./src
 RUN ./gradlew bootJar --no-daemon
 FROM openjdk:17-jdk-slim
 WORKDIR /parcial2-arquitectura-master
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /parcial2-arquitectura-master/build/libs/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
