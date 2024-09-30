@@ -6,7 +6,6 @@ plugins {
 }
 
 group = 'co.edu.unisabana'
-version = '0.0.1-SNAPSHOT'
 
 
 java {
@@ -68,3 +67,11 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	archiveBaseName = 'parcial-2'
+	archiveVersion = '0.0.1-SNAPSHOT'
+	archiveClassifier = ''
+	mainClassName = 'co.edu.unisabana.ParcialApplication'
+}
+
