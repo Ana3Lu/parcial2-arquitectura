@@ -1,6 +1,10 @@
 package co.edu.unisabana.parcial.logica;
 
+import co.edu.unisabana.parcial.controller.dto.CheckpointDTO;
+import co.edu.unisabana.parcial.service.CheckpointDAO;
 import co.edu.unisabana.parcial.service.CheckpointService;
+import co.edu.unisabana.parcial.service.model.Checkin;
+import co.edu.unisabana.parcial.service.model.Checkout;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +24,52 @@ public abstract class CheckpointServiceTest {
     CheckpointRepository checkpointRepository;
 
     @InjectMocks
+    CheckpointDAO checkpointPort;
+
+    @InjectMocks
     CheckpointService checkpointService;
+
+
+    @Test
+    void shouldCheckin() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpointService.checkin(checkpoint);
+        Mockito.verify(checkpointPort, Mockito.times(1)).saveCheckin(Mockito.any(Checkin.class));
+    }
+
+    @Test
+    void shouldNotCheckin() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpoint.dayOfMonth = 0;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> checkpointService.checkin(checkpoint));
+        Mockito.verify(checkpointPort, Mockito.times(0)).saveCheckin(Mockito.any(Checkin.class));
+    }
+
+    @Test
+    void shouldCheckout() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpointService.checkout(checkpoint);
+        Mockito.verify(checkpointPort, Mockito.times(1)).saveCheckout(Mockito.any(Checkout.class));
+    }
+
+    @Test
+    void shouldNotCheckout() {
+        CheckpointDTO checkpoint = new CheckpointDTO();
+        checkpoint.dayOfMonth = 0;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> checkpointService.checkout(checkpoint));
+        Mockito.verify(checkpointPort, Mockito.times(0)).saveCheckout(Mockito.any(Checkout.class));
+    }
+
+    public void checkout(CheckpointDTO checkpoint) {
+        Checkin lastCheckin = checkpointPort.findLastCheckin(checkpoint.driver, checkpoint.facility);
+        if (lastCheckin == null) {
+            throw new IllegalArgumentException("don't exist previously check in");
+        }
+        if (checkpoint.dayOfMonth > 30 || checkpoint.dayOfMonth < 1) {
+            throw new IllegalArgumentException("Invalid date");
+        }
+        Checkout checkout = new Checkout(checkpoint.facility, checkpoint.driver, checkpoint.dayOfMonth);
+        checkpointPort.saveCheckout(checkout);
+    }
 
 }
