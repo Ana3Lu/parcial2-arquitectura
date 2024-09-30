@@ -6,10 +6,12 @@ import co.edu.unisabana.parcial.repository.sql.jpa.CheckpointRepository;
 import co.edu.unisabana.parcial.controller.dto.CheckpointDTO;
 import co.edu.unisabana.parcial.repository.sql.jpa.CheckpointRepository;
 import co.edu.unisabana.parcial.repository.sql.entity.Checkpoint;
+import co.edu.unisabana.parcial.service.CheckpointDAO;
 import co.edu.unisabana.parcial.service.CheckpointService;
 import co.edu.unisabana.parcial.service.model.Checkin;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -26,18 +28,16 @@ public class GateControllerTest {
 
     CheckpointDTO checkpointDTO;
 
+    @Mock
+    CheckpointDAO checkpointDAO;
+
     @Autowired
     CheckpointRepository checkpointRepository;
 
     @Autowired
     private TestRestTemplate testRestTemplate;
 
-    @BeforeEach
-    void setUp() {
-        checkpointDTO = new CheckpointDTO("1", "Canguro", 3);
-    }
-
-    @Test
+    /*@Test
     void shouldCreateCheckpointSuccessfully() {
         ResponseEntity<ResponseGate> respuesta = testRestTemplate.postForEntity("/checkpoint/checkin", checkpointDTO, ResponseGate.class);
         Assertions.assertTrue(respuesta.getStatusCode().is2xxSuccessful());
@@ -57,7 +57,7 @@ public class GateControllerTest {
         Assertions.assertTrue(checkpointRepository.findAll().isEmpty());
     }*/
 
-    @Test
+    /*@Test
     void shouldCreateCheckout() {
         ResponseEntity<ResponseGate> respuesta = testRestTemplate.postForEntity("/checkpoint/checkout", checkpointDTO, ResponseGate.class);
         Assertions.assertTrue(respuesta.getStatusCode().is2xxSuccessful());

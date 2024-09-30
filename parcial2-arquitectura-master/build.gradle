@@ -41,7 +41,7 @@ jacocoTestReport {
 					"**/dto/**",
 					"**/entity/*",
 					"**/model/*",
-					"**/jpa/*"
+					"**/jpa/*",
 			])
 		}))
 	}
