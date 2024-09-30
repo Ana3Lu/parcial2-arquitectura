@@ -25,7 +25,7 @@ public class CheckpointServiceTest {
     CheckpointRepository checkpointRepository;
 
     @InjectMocks
-    CheckpointDAO checkpointPort;
+    CheckpointDTO checkpointPort;
 
     @InjectMocks
     CheckpointService checkpointService;
