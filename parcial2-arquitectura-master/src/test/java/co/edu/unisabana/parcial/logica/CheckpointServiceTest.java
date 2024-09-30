@@ -19,7 +19,7 @@ import java.util.List;
 import co.edu.unisabana.parcial.repository.sql.jpa.CheckpointRepository;
 
 @ExtendWith(MockitoExtension.class)
-public abstract class CheckpointServiceTest {
+public class CheckpointServiceTest {
 
     @Mock
     CheckpointRepository checkpointRepository;
